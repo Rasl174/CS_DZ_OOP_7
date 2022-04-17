@@ -21,6 +21,7 @@ namespace CS_DZ_OOP_7
         {
             Route route = new Route();
             Passengers passengers = new Passengers();
+            Wagoon wagoon = new Wagoon();
             Train train = new Train();
 
             bool isWork = true;
@@ -31,7 +32,8 @@ namespace CS_DZ_OOP_7
             {
                 route.CreateRoute();
                 passengers.SellTicketsPassengers();
-                train.GetTrain(passengers);
+                wagoon.FormWagoon();
+                train.FormTrain(passengers, wagoon);
                 train.SendTrain(route, passengers, train);
             }
         }
@@ -60,21 +62,18 @@ namespace CS_DZ_OOP_7
         }
     }
 
-    class Train
+    class Wagoon
     {
-        public int WagonsCount { get; private set; }
-
         public int WagonCapacity { get; private set; }
 
-        public void GetTrain(Passengers passengers)
+        public void FormWagoon()
         {
-            WagonsCount = 1;
             Console.Write("Введите вместимость одного вагона не мение 10 и не больше 50: ");
             bool correctInput = false;
 
-            while(correctInput == false)
+            while (correctInput == false)
             {
-                if(int.TryParse(Console.ReadLine(), out int userinput) && userinput >= 10 && userinput <= 50)
+                if (int.TryParse(Console.ReadLine(), out int userinput) && userinput >= 10 && userinput <= 50)
                 {
                     correctInput = true;
                     WagonCapacity = userinput;
@@ -84,8 +83,17 @@ namespace CS_DZ_OOP_7
                     Console.WriteLine("Не верный ввод повторите попытку!");
                 }
             }
+        }
+    }
 
-            WagonsCount += passengers.Count / WagonCapacity;
+    class Train
+    {
+        public int WagonsCount { get; private set; }
+
+        public void FormTrain(Passengers passengers, Wagoon wagoons)
+        {
+            WagonsCount = (passengers.Count / wagoons.WagonCapacity) + 1;
+            
             Console.WriteLine("Сформирован поезд с количеством вагонов - " + WagonsCount);
         }
 

@@ -92,8 +92,6 @@ namespace CS_DZ_OOP_7
         public void SendTrain(Route route, Passengers passengers, Train train)
         {
             Console.WriteLine("Поезд - " + route.Name + " с пассажирами в количестве - " + passengers.Count + " человек и составом из " + train.WagonsCount + " вагонов отправлен!");
-            Console.ReadKey();
-            Console.Clear();
         }
     }
 }
